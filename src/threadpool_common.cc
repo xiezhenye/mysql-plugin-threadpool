@@ -389,14 +389,16 @@ void pool_of_threads_scheduler(struct scheduler_functions *func)
 
 // plugin
 
-static void fix_threadpool_size(THD*, struct st_mysql_sys_var *, void*, const void*)
+static void fix_threadpool_size(THD*, struct st_mysql_sys_var *, void*, const void* value)
 {
+  threadpool_size = *static_cast<const uint*>(value);
   tp_set_threadpool_size(threadpool_size);
 }
 
 
-static void fix_threadpool_stall_limit(THD*, struct st_mysql_sys_var *, void*, const void*)
+static void fix_threadpool_stall_limit(THD*, struct st_mysql_sys_var *, void*, const void* value)
 {
+  threadpool_stall_limit = *static_cast<const uint*>(value);
   tp_set_threadpool_stall_limit(threadpool_stall_limit);
 }
 
