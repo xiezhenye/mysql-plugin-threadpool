@@ -1355,7 +1355,10 @@ connection_t *alloc_connection(THD *thd)
 void tp_add_connection(THD *thd)
 {
   DBUG_ENTER("tp_add_connection");
-  
+  if (thd == NULL) {
+    return;
+  }
+
   add_global_thread(thd);
   mysql_mutex_unlock(&LOCK_thread_count);
   connection_t *connection= alloc_connection(thd);
